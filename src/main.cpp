@@ -33,13 +33,13 @@ void IRAM_ATTR onButton() {
   }else{
     Speed = 2.5;
   }
-  Serial.print(Speed);
 }
 
 void setup() {
   pinMode(BUTTON, INPUT);
   pinMode(BUZZER, OUTPUT);
   pinMode(LED, OUTPUT);
+  Serial.begin(9600);
   My_timer = timerBegin(0, 80, true);   // use timer 0 and set prescale to 80 so 1 tick is 1 uSec
   timerAttachInterrupt(My_timer, &onTimer, true); // point to the ISR
   // timerAlarmWrite(My_timer, 1000000 , true);  // set alarm every 1 sec
@@ -52,9 +52,12 @@ void setup() {
 void play(int Octaves) {
     timerAlarmEnable(My_timer);
   for(int i = 0 ; i < sizeof(song)/sizeof(song[0]) ; i++){
-    timerAlarmWrite(My_timer, song[i]/pow(2,Octaves) , true);
+    Serial.print("Speed = ");
+    Serial.print(Speed);
+    Serial.print(" Song note Frequency = ");
+    Serial.println(10000000/(song[i]*2));    
+    timerAlarmWrite(My_timer, song[i]/pow(2,Octaves), true);
     delay(((Speed*500)-100)*rhythm[i]);
-    Serial.println(song[i]);
   }
 }
 
