@@ -57,7 +57,7 @@ void play(int Octaves) {
     Serial.print(" Song note Frequency = ");
     Serial.println(10000000/(song[i]*2));    
     timerAlarmWrite(My_timer, song[i]/pow(2,Octaves), true);
-    delay(((Speed*500)-100)*rhythm[i]);
+    delay(((Speed*500)-100)/rhythm[i]);
   }
 }
 
