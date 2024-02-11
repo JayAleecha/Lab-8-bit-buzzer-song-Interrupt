@@ -8,7 +8,7 @@ hw_timer_t *My_timer = NULL;
 double c = 1000000/(2*16.35) , D = 1000000/(2*18.35) , E = 1000000/(2*20.60) , F = 1000000/(2*21.83) , 
        G = 1000000/(2*24.50) , A = 1000000/(2*27.50) , B = 1000000/(2*30.87) , C = 1000000/(2*32.70) , Stop = 8000000;
 
-double Speed = 2.5;
+double Slow = 2.5;
 
 int Octaves = 0;
 
@@ -28,10 +28,10 @@ void IRAM_ATTR onTimer() {
 
 void IRAM_ATTR onButton() {
   digitalWrite(LED, !digitalRead(LED));
-  if(Speed > 0.5){
-    Speed -= 0.5;
+  if(Slow > 0.5){
+    Slow -= 0.5;
   }else{
-    Speed = 2.5;
+    Slow = 2.5;
   }
 }
 
@@ -53,11 +53,11 @@ void play(int Octaves) {
     timerAlarmEnable(My_timer);
   for(int i = 0 ; i < sizeof(song)/sizeof(song[0]) ; i++){
     Serial.print("Speed = ");
-    Serial.print(Speed);
+    Serial.print(((5-Slow)/0.5)-4);
     Serial.print(" Song note Frequency = ");
     Serial.println(10000000/(song[i]*2));    
     timerAlarmWrite(My_timer, song[i]/pow(2,Octaves), true);
-    delay(((Speed*500)-100)/rhythm[i]);
+    delay(((Slow*500)-100)/rhythm[i]);
   }
 }
 
